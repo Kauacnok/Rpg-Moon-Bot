@@ -1,4 +1,5 @@
 import { User } from "discord.js"
+import { randomIntFromInterval } from "./mathRandom"
 
 function rollDice(quantityToAdd: number = 0, author: User) {
 
@@ -8,7 +9,7 @@ function rollDice(quantityToAdd: number = 0, author: User) {
     let stringDice = ""
 
     for (let i = 0; i < 4; i++) {
-        const indexRandom = Math.floor(Math.random() * ((dicePossibilities.length - 1) - 0 + 1) + 0)
+        const indexRandom = randomIntFromInterval(0, (dicePossibilities.length - 1))
 
         totalDice += dicePossibilities[indexRandom]
         stringDice = `${stringDice} ${diceFormatString[indexRandom]}`

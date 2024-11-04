@@ -1,7 +1,8 @@
+import { ApplicationCommandDataResolvable, BitFieldResolvable, Client, ClientEvents, Collection, GatewayIntentsString, IntentsBitField, Message, OmitPartialGroupDMChannel, Partials } from "discord.js";
+import "dotenv/config";
 import fs from "fs";
 import path from "path";
-import { Client, Partials, IntentsBitField, BitFieldResolvable, GatewayIntentsString, Collection, ApplicationCommandDataResolvable, ClientEvents, OmitPartialGroupDMChannel, Message } from "discord.js";
-import "dotenv/config";
+import { goodMorningMessage } from "../commands/alternatives/goodMorning";
 import { CommandType, CommandTypePrefix, ComponentsButton, ComponentsModal, ComponentsSelect } from "./types/Command";
 import { EventType } from "./types/Event";
 const fileCondition = (fileName: string) => fileName.endsWith(".ts") || fileName.endsWith(".js")
@@ -90,7 +91,7 @@ export class ExtendedClient extends Client {
 		
 			fs.readdirSync(`${eventsPath}/${local}`).filter(fileCondition)
 			.forEach(async fileName => {
-				const { name, once, run}: EventType<keyof ClientEvents> = (await import(`../events/${local}/${fileName}`))?.default
+				const { name, once, run }: EventType<keyof ClientEvents> = (await import(`../events/${local}/${fileName}`))?.default
 
 				try {
 
@@ -132,7 +133,15 @@ export class ExtendedClient extends Client {
 		})
 	}
 
-	private callPrefixCommands(message: OmitPartialGroupDMChannel<Message<boolean>>) {
+	private async callPrefixCommands(message: OmitPartialGroupDMChannel<Message<boolean>>) {
+
+		if (message.content.toLocaleLowerCase() == "bom dia grupo") {
+
+			await goodMorningMessage(message)
+
+			return
+		}
+
 		if (!message.guild) return
 		if (message.author.bot) return
 		if (!message.content.startsWith(process.env.PREFIX!)) return
