@@ -33,8 +33,6 @@ export default findx.createCommandPrefix({
             const confirmation = await response.awaitMessageComponent({ time: 300_000 })
 
             if (confirmation.user.id !== message.author.id) {
-                await message.channel.send({ content: "Esta interação pertence a outro usuário!", options: { ephemeral: true } })
-
                 return
             }
 

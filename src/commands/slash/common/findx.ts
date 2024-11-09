@@ -28,9 +28,7 @@ export default new Command({
         try {
             const confirmation = await response.awaitMessageComponent({ time: 300_000 })
 
-            if (confirmation.user.id !== interaction.user.id) {
-                await interaction.channel.send({ content: "Esta interação pertence a outro usuário!", options: { ephemeral: true } })
-
+            if (confirmation.user.id == interaction.user.id) {
                 return
             }
 
