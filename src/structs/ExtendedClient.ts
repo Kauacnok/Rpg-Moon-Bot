@@ -5,6 +5,7 @@ import path from "path";
 import { goodMorningMessage } from "../commands/alternatives/goodMorning";
 import { CommandType, CommandTypePrefix, ComponentsButton, ComponentsModal, ComponentsSelect } from "./types/Command";
 import { EventType } from "./types/Event";
+import { rulesMessage } from "../commands/alternatives/rules";
 const fileCondition = (fileName: string) => fileName.endsWith(".ts") || fileName.endsWith(".js")
 
 export class ExtendedClient extends Client {
@@ -138,6 +139,12 @@ export class ExtendedClient extends Client {
 		if (message.content.toLocaleLowerCase() == "bom dia grupo") {
 
 			await goodMorningMessage(message)
+
+			return
+		}
+
+		if (message.content.toLocaleLowerCase() == "!regras") {
+			await rulesMessage(message)
 
 			return
 		}
