@@ -23,35 +23,37 @@ export default new Command({
         const row = new ActionRowBuilder<ButtonBuilder>()
         .addComponents(...buttons)
 
-        const response = await interaction.reply({ content: "Encontre o X", components: [row] })
+        const response = await interaction.reply({ content: "Encontre o X", components: [row], fetchReply: true })
 
         try {
-            const confirmation = await response.awaitMessageComponent({ time: 300_000 })
+            const collector = await response.createMessageComponentCollector({ time: 300_000 })
 
-            if (confirmation.user.id == interaction.user.id) {
-                return
-            }
+            collector.on("collect", async buttonInteraction => {
+                if (buttonInteraction.user.id !== interaction.user.id) {
+                    return
+                }
 
-            for (let i = 0; i < 3; i++) {
-                row.components[i].setDisabled(true)
-                row.components[i].setLabel(`option${i}` == optionSort ? "X" : "O")
-            }
+                for (let i = 0; i < 3; i++) {
+                    row.components[i].setDisabled(true)
+                    row.components[i].setLabel(`option${i}` == optionSort ? "X" : "O")
+                }
 
-            for (let i = 0; i < 3; i++) {
-                if (confirmation.customId == options[i]) {
-                    if (options[i] == optionSort) {
-                        await confirmation.update({ components: [row] })
-                        await interaction.channel.send(`${confirmation.user} acertou!`)
+                for (let i = 0; i < 3; i++) {
+                    if (buttonInteraction.customId == options[i]) {
+                        if (options[i] == optionSort) {
+                            await buttonInteraction.update({ components: [row] })
+                            await buttonInteraction.followUp(`${buttonInteraction.user} acertou!`)
 
-                        return
-                    } else {
-                        await confirmation.update({ components: [row] })
-                        await interaction.channel.send(`${confirmation.user} errou!`)
+                            return
+                        } else {
+                            await buttonInteraction.update({ components: [row] })
+                            await buttonInteraction.followUp(`${buttonInteraction.user} errou!`)
 
-                        return
+                            return
+                        }
                     }
                 }
-            }
+            })
 
         } catch(error) {
             await response.edit({ content: "Tempo de interação encerrado", components: [] } )

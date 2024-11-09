@@ -79,13 +79,13 @@ export default new Command({
                 if (buttonInteraction.customId == "option0") {
                     page -= 1
 
-                    const result = updateCharacterPage(character, page, row, embedCharacter, { displayName: interaction.user.displayName, id: interaction.user.id, avatar: interaction.user.avatar })
+                    const result = updateCharacterPage(character, page, row, embedCharacter, { displayName: interaction.user.displayName, id: interaction.user.id, avatar: interaction.user.avatar! })
 
                     await buttonInteraction.update({ embeds: [result.embed], components: [result.row] })
                 } else if (buttonInteraction.customId == "option1") {
                     page += 1
 
-                    const result = updateCharacterPage(character, page, row, embedCharacter, { displayName: interaction.user.displayName, id: interaction.user.id, avatar: interaction.user.avatar })
+                    const result = updateCharacterPage(character, page, row, embedCharacter, { displayName: interaction.user.displayName, id: interaction.user.id, avatar: interaction.user.avatar! })
 
                     await buttonInteraction.update({ embeds: [result.embed], components: [result.row] })
                 }

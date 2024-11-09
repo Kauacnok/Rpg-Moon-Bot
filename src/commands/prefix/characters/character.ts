@@ -79,13 +79,13 @@ export default character.createCommandPrefix({
                 if (buttonInteraction.customId == "option0") {
                     page -= 1
 
-                    const result = updateCharacterPage(character, page, row, embedCharacter, { displayName: message.author.displayName, id: message.author.id, avatar: message.author.avatar })
+                    const result = updateCharacterPage(character, page, row, embedCharacter, { displayName: message.author.displayName, id: message.author.id, avatar: message.author.avatar! })
 
                     await buttonInteraction.update({ embeds: [result.embed], components: [result.row] })
                 } else if (buttonInteraction.customId == "option1") {
                     page += 1
 
-                    const result = updateCharacterPage(character, page, row, embedCharacter, { displayName: message.author.displayName, id: message.author.id, avatar: message.author.avatar })
+                    const result = updateCharacterPage(character, page, row, embedCharacter, { displayName: message.author.displayName, id: message.author.id, avatar: message.author.avatar! })
 
                     await buttonInteraction.update({ embeds: [result.embed], components: [result.row] })
                 }
