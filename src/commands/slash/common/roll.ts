@@ -14,12 +14,18 @@ export default new Command({
             required: false
         }
     ],
-    run({ interaction, options }) {
+    async run({ interaction, options }) {
 
         const diceQuantityAdd = options.data.length > 0 ? options.data[0].value! : 0
 
-        const dice = rollDice(Number(diceQuantityAdd), interaction.user)
+        const { diceStringResult, diceOnlyNumber } = rollDice(Number(diceQuantityAdd), interaction.user)
 
-        interaction.reply({ content: dice })
+        await interaction.reply({ content: diceStringResult })
+
+        if (diceOnlyNumber == 4) {
+            await interaction.followUp({ content: 'https://tenor.com/view/fireworks-firework-fourth-of-july-chinese-invention-celebrate-gif-8120832' })
+        } else if (diceOnlyNumber == -4) {
+            await interaction.followUp({ content: 'https://tenor.com/view/walter-white-falling-fast-gif-18043850' })
+        }
     }
 })

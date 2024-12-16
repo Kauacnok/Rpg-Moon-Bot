@@ -15,9 +15,13 @@ function rollDice(quantityToAdd: number = 0, author: User) {
         stringDice = `${stringDice} ${diceFormatString[indexRandom]}`
     }
 
+    let diceOnlyNumber = totalDice
     totalDice += quantityToAdd
 
-    return `[${stringDice.trim()}] ${quantityToAdd} = ${totalDice} (${author})`
+    return {
+        diceStringResult: `[${stringDice.trim()}] ${quantityToAdd} = ${totalDice} (${author})`,
+        diceOnlyNumber
+    }
 }
 
 export { rollDice }

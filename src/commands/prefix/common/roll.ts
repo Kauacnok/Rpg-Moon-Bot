@@ -22,8 +22,14 @@ export default roll.createCommandPrefix({
             }
         }
 
-        const dice = rollDice(args.length > 0 ? Number(args[0]) : 0, message.author)
+        const { diceStringResult, diceOnlyNumber } = rollDice(args.length > 0 ? Number(args[0]) : 0, message.author)
 
-        await message.channel.send(dice)
+        await message.channel.send(diceStringResult)
+
+        if (diceOnlyNumber == 4) {
+            await message.channel.send('https://tenor.com/view/fireworks-firework-fourth-of-july-chinese-invention-celebrate-gif-8120832')
+        } else if (diceOnlyNumber == -4) {
+            await message.channel.send('https://tenor.com/view/walter-white-falling-fast-gif-18043850')
+        }
     },
 })
